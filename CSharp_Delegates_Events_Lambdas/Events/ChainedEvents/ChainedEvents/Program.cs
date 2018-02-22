@@ -33,6 +33,14 @@ namespace ChainedEvents
             // create the test class
             MyClass obj = new MyClass();
 
+            // Connect multiple event handlers
+            obj.valueChanged += changeListener1;
+            obj.valueChanged += changeListener2;
+
+            // Use an anonymous delegate as the event handler
+            obj.valueChanged += delegate (string s) {
+                Console.WriteLine("This came from the anonymous handler!");
+            };
 
             string str;
             do {
@@ -49,6 +57,7 @@ namespace ChainedEvents
         {
             Console.WriteLine("The value changed to {0}", value);
         }
+
         static void changeListener2(string value)
         {
             Console.WriteLine("I also listen to the event, and got {0}", value);
