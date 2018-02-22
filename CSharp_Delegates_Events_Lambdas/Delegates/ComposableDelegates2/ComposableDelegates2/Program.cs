@@ -12,6 +12,18 @@ namespace ComposableDelegates2
 
     class Program
     {
+        static void func1(int arg1, ref int arg2)
+        {
+            string result = (arg1 + arg2).ToString();
+            arg2 += 20; // arg2 is a ref parameter, so this will change it
+            Console.WriteLine("The number is: " + result);
+        }
+
+        static void func2(int arg1, ref int arg2)
+        {
+            string result = (arg1 * arg2).ToString();
+            Console.WriteLine("The number is: " + result);
+        }
 
         static void Main(string[] args)
         {
