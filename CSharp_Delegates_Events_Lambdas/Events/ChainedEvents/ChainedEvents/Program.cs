@@ -14,7 +14,7 @@ namespace ChainedEvents
         private string theVal;
         // declare the event handler
         public event myEventHandler valueChanged;
-
+        public event EventHandler<ObjChangeEventArgs> objChanged;
         public string Val
         {
             set
@@ -22,6 +22,7 @@ namespace ChainedEvents
                 this.theVal = value;
                 // when the value changes, fire the event
                 this.valueChanged(theVal);
+                this.objChanged(this, new ObjChangeEventArgs() { propChanged = "Val" });
             }
         }
     }
@@ -40,6 +41,10 @@ namespace ChainedEvents
             // Use an anonymous delegate as the event handler
             obj.valueChanged += delegate (string s) {
                 Console.WriteLine("This came from the anonymous handler!");
+            };
+
+            obj.objChanged += delegate (object sender, ObjChangeEventArgs e) {
+                Console.WriteLine("{0} had the '{1}' property changed", sender.GetType(), e.propChanged);
             };
 
             string str;
@@ -62,5 +67,10 @@ namespace ChainedEvents
         {
             Console.WriteLine("I also listen to the event, and got {0}", value);
         }
+    }
+
+    class ObjChangeEventArgs : EventArgs
+    {
+        public string propChanged;
     }
 }
